@@ -4,8 +4,6 @@ import {ReplacePronouns} from "./../utils.js";
 
 export function NavigationFlow(destPassage){
     
-    _StoreDestPassageToActionLogger(destPassage);
-
     const $passageHandler = window.gameHandler.passageHandler;
     
      _SetCurrentPassage($passageHandler,destPassage);
@@ -14,14 +12,6 @@ export function NavigationFlow(destPassage){
     
     _DisplayCurrentPassage($passageHandler);
     
-    _AddCharResponseCSSClasses();
-    
-    _DisplayAskFavoriteLinks();
-}
-
-function _StoreDestPassageToActionLogger(destPassage){
-    
-    window.gameHandler.actionLogger.AddAction("navigate to " + destPassage);
 }
 
 function _SetCurrentPassage(passageHandler,destPassage){
@@ -47,44 +37,44 @@ function _DisplayCurrentPassage(passageHandler){
     AttachEventListenersDOMs("navigationOutput");
 }
 
-function _AddCharResponseCSSClasses(){
-    
-    const gh = window.gameHandler;
-    
-    const navOutput = GetElementById("navigationOutput");
-        
-    for (const char of gh.characterHandler.characters){
-        
-        const currentPassageId = gh.passageHandler.currentPassage.id
-        
-        if(!char.presentPassages.includes(currentPassageId)) continue
-
-        const $respoDiv = GetOrCreateDivInsideDOM(`${char.id}Response`,navOutput);
-        
-        $respoDiv.classList.add("charResponse");
-        
-    }
-}
-
-function _DisplayAskFavoriteLinks(){
-    
-    const gh = window.gameHandler;
-    
-    const navOutput = GetElementById("navigationOutput");
-    
-    for (const char of gh.characterHandler.characters){
-        
-        if(char.presentPassages.includes(gh.passageHandler.currentPassage.id)){
-            
-            const $favLink = GetOrCreateDivInsideDOM(`${char.id}FavoriteLink`,navOutput);
-            
-            const $their = char.GetPronouns().their;
-            
-            $favLink.insertAdjacentHTML("beforeend", `Ask ${char.GetCharacterName()} ${$their} favorite poem<br><br>`)
-            
-            $favLink.classList.add("passageLink");
-            
-            $favLink.addEventListener("click",function(){char.ShareFavoritePoems()})
-        }
-    }
-}
+//function _AddCharResponseCSSClasses(){
+//    
+//    const gh = window.gameHandler;
+//    
+//    const navOutput = GetElementById("navigationOutput");
+//        
+//    for (const char of gh.characterHandler.characters){
+//        
+//        const currentPassageId = gh.passageHandler.currentPassage.id
+//        
+//        if(!char.presentPassages.includes(currentPassageId)) continue
+//
+//        const $respoDiv = GetOrCreateDivInsideDOM(`${char.id}Response`,navOutput);
+//        
+//        $respoDiv.classList.add("charResponse");
+//        
+//    }
+//}
+//
+//function _DisplayAskFavoriteLinks(){
+//    
+//    const gh = window.gameHandler;
+//    
+//    const navOutput = GetElementById("navigationOutput");
+//    
+//    for (const char of gh.characterHandler.characters){
+//        
+//        if(char.presentPassages.includes(gh.passageHandler.currentPassage.id)){
+//            
+//            const $favLink = GetOrCreateDivInsideDOM(`${char.id}FavoriteLink`,navOutput);
+//            
+//            const $their = char.GetPronouns().their;
+//            
+//            $favLink.insertAdjacentHTML("beforeend", `Ask ${char.GetCharacterName()} ${$their} favorite poem<br><br>`)
+//            
+//            $favLink.classList.add("passageLink");
+//            
+//            $favLink.addEventListener("click",function(){char.ShareFavoritePoems()})
+//        }
+//    }
+//}
